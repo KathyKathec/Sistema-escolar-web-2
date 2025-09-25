@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+<body>
+<h2>Editar professores</h2>
+<form method="post">
+	<label for="nome">Nome:</label>
+	<input type="text" name="nome" id="nome" th:value="${nome}"/>
+	<br />
+	<label for="email">Email:</label>
+	<input type="email" name="email" id="email" th:value="${email}"/>
+	<br />
+	<button type="submit">Enviar</button>
+</form>
+</body>
+</html>
