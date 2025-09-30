@@ -189,7 +189,8 @@ public class CursoControler {
 	@PostMapping("/editar/{id}")
 	public String editarBD(
 	        @ModelAttribute @Valid CursoDto cursoDto,
-	        BindingResult result,
+	        BindingResult result, 
+	        @RequestParam("file") MultipartFile imagem,
 	        RedirectAttributes msg,
 	        @PathVariable(value="id") int id,
 	        @RequestParam("professorId") int professorId) {
@@ -213,6 +214,17 @@ public class CursoControler {
 	    ProfessorModel professor = professorRepository.findById(professorId)
 	            .orElseThrow(() -> new RuntimeException("Professor não encontrado"));
 	    cursoModel.setProfessor(professor);
+
+	    try {
+	        if(!imagem.isEmpty()) {
+	            byte[] bytes = imagem.getBytes();
+	            Path caminho = Paths.get("./src/main/resources/static/img/"+imagem.getOriginalFilename());
+	            Files.write(caminho, bytes);
+	            cursoModel.setImagem(imagem.getOriginalFilename());
+	        }
+	    } catch(IOException e) {
+	        System.out.println("erro imagem");
+	    }
 
 	    repositorio.save(cursoModel);
 	    msg.addFlashAttribute("sucessoEditar", "Curso editado!");

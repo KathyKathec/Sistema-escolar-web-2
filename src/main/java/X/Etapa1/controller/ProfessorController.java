@@ -112,6 +112,7 @@ public class ProfessorController {
 	@PostMapping("/editar/{id}")
 	public String editarBD(
 			@ModelAttribute @Valid ProfessorDTO professorDTO, 
+			@RequestParam("file") MultipartFile imagem,
 			BindingResult result, RedirectAttributes msg,
 			@PathVariable(value="id") int id) {
 		
@@ -121,7 +122,20 @@ public class ProfessorController {
 		msg.addFlashAttribute("erroEditar", "Erro ao editar o professor!");
 			return "redirect:/professor/listar/";
 		}
+		
 		var professorModel = professor.get();
+		try {
+			if(!imagem.isEmpty()) {
+				byte[] bytes = imagem.getBytes();
+				Path caminho = Paths.get(
+						"./src/main/resources/static/img/"+imagem.getOriginalFilename());
+				Files.write(caminho, bytes);
+				professorModel.setImagem(imagem.getOriginalFilename());
+			}
+		}catch(IOException e) {
+			System.out.println("erro imagem");
+		}
+		
 		BeanUtils.copyProperties(professorDTO, professorModel);
 		repositorio.save(professorModel);
 		msg.addFlashAttribute("sucessoEditar", "Professor editado!");
