@@ -1,40 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Professores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
 
-	<head>
-		<title>Site de professores</title>
-	</head>
-	<body>
-	<th:block th:include="professores/msg"></th:block>
-		<br />
-		<form method="POST" action="/professor/listar/">
-			<label for="busca">Busca</label>
-			<input type="text" name="busca" id="busca" />
-			<button type="submit">Enviar</button>
-		</form>
-	
-		<table border>
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Nome</th>
-					<th>Email</th>
-					<th>Foto</th>
-					<th colspan="2">Ações</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="professor: ${professores}">
-					<td th:text="${professor.id}"></td>
-					<td th:text="${professor.nome}"></td>
-					<td th:text="${professor.email}"></td>
-					<td><img th:src="@{/professor/mostrarImagem/{img}(img=${professor.imagem})}"/></td>
-					<td><a th:href="@{/professor/editar/{id}(id=${professor.id})}">
-					Editar</a></td>
-					<td><a th:href="@{/professor/excluir/{id}(id=${professor.id})}">
-					Excluir</a></td>
-				</tr>
-			</tbody>
-		</table>
-	</body>
+    <h2>Lista de Professores</h2>
+    
+    <div class="mb-3 mt-3">
+        <form method="POST" action="/professor/listar/" class="d-flex">
+            <input type="text" class="form-control me-2" name="busca" placeholder="Buscar professor..." id="busca"/>
+            <button type="submit" class="btn btn-primary">Pesquisar</button>
+            <a th:href="@{/professor/inserir/}" class="btn btn-success ms-2">Cadastrar Novo</a>
+        </form>
+    </div>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Foto</th>
+                <th colspan="2">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="professor: ${professores}">
+                <td th:text="${professor.id}"></td>
+                <td th:text="${professor.nome}"></td>
+                <td th:text="${professor.email}"></td>
+                <td>
+                    <img th:src="@{/professor/mostrarImagem/{img}(img=${professor.imagem})}" 
+                         class="img-thumbnail" style="width:100px;height:auto;"/>
+                </td>
+                <td>
+                    <a th:href="@{/professor/editar/{id}(id=${professor.id})}" class="btn btn-warning btn-sm">Editar</a>
+                </td>
+                <td>
+                    <a th:href="@{/professor/excluir/{id}(id=${professor.id})}" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
 </html>

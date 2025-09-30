@@ -1,36 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Site de Categorias</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Cursos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">Home</a>
+                    </li>
+                    <!-- Aqui pode adicionar links para categorias específicas -->
+                </ul>
+                <form class="d-flex" method="POST" action="/categorias/listar/">
+                    <input class="form-control me-2" type="search" placeholder="Buscar categoria" name="busca">
+                    <button class="btn btn-outline-light" type="submit">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 
-	<head>
-		<title>Site de categorias </title>
-	</head>
-	<body>
-	<th:block th:include="categorias/msg"></th:block>
-		<br />
-		<form method="POST" action="/categorias/listar/">
-			<label for="busca">Busca</label>
-			<input type="text" name="busca" id="busca" />
-			<button type="submit">Enviar</button>
-		</form>
-	
-		<table border>
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Nome</th>
-					<th colspan="2">Ações</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="categorias: ${categorias}">
-					<td th:text="${categoria.id}"></td>
-					<td th:text="${categoria.nome}"></td>
-					<td><a th:href="@{/categoria/editar/{id}(id=${categoria.id})}">
-					Editar</a></td>
-					<td><a th:href="@{/categoria/excluir/{id}(id=${categoria.id})}">
-					Excluir</a></td>
-				</tr>
-			</tbody>
-		</table>
-	</body>
+    <div class="container">
+        <!-- Mensagens de feedback -->
+        <div th:include="categorias/msg"></div>
+
+        <h2 class="mb-3">Lista de Categorias</h2>
+
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th colspan="2">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="categoria : ${categorias}">
+                    <td th:text="${categoria.id}"></td>
+                    <td th:text="${categoria.nome}"></td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" th:href="@{/categoria/editar/{id}(id=${categoria.id})}">Editar</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-danger" th:href="@{/categoria/excluir/{id}(id=${categoria.id})}">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light text-center py-3 mt-4">
+        &copy; 2025 Katherin Pereda - Todos os direitos reservados
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

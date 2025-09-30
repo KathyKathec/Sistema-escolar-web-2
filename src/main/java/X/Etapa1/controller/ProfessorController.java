@@ -118,7 +118,7 @@ public class ProfessorController {
 		Optional<ProfessorModel> professor = repositorio.findById(id);
 
 		if(result.hasErrors()) {
-		msg.addFlashAttribute("erroEditar", "Erro ao editar o professo!");
+		msg.addFlashAttribute("erroEditar", "Erro ao editar o professor!");
 			return "redirect:/professor/listar/";
 		}
 		var professorModel = professor.get();

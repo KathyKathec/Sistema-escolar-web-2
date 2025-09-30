@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Curso</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Editar Curso</h2>
+    <form method="post">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome:</label>
+            <input type="text" name="nome" id="nome" th:value="${curso.nome}" class="form-control"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição:</label>
+            <input type="text" name="descricao" id="descricao" th:value="${curso.descricao}" class="form-control"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoria:</label>
+            <select name="categoriaId" id="categoria" class="form-select" required>
+                <option value="">-- selecione --</option>
+                <th:block th:each="cat : ${categorias}">
+                    <option th:value="${cat.id}"
+                            th:text="${cat.nome}"
+                            th:selected="${curso.categoria != null} ? ${curso.categoria.id == cat.id} : false">
+                    </option>
+                </th:block>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="professor" class="form-label">Professor:</label>
+            <select name="professorId" id="professor" class="form-select" required>
+                <option value="">-- selecione --</option>
+                <th:block th:each="prof : ${professores}">
+                    <option th:value="${prof.id}"
+                            th:text="${prof.nome}"
+                            th:selected="${curso.professor != null} ? ${curso.professor.id == prof.id} : false">
+                    </option>
+                </th:block>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="dataInicio" class="form-label">Data início:</label>
+            <input type="date" name="dataInicio" id="dataInicio" th:value="${curso.dataInicio}" class="form-control"/>
+        </div>
+
+        <div class="mb-3">
+            <label for="dataFinal" class="form-label">Data final:</label>
+            <input type="date" name="dataFinal" id="dataFinal" th:value="${curso.dataFinal}" class="form-control"/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes do Curso</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Cursos</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/curso/listar/}">Todos os Cursos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="card shadow-sm mb-4">
+        <img th:src="@{/curso/mostrarImagem/{img}(img=${curso.imagem})}" class="card-img-top" alt="Imagem do curso">
+        <div class="card-body">
+            <h3 class="card-title mb-3" th:text="${curso.nome}"></h3>
+            <p class="card-text" th:text="${curso.descricao}"></p>
+
+            <ul class="list-group list-group-flush mt-3">
+                <li class="list-group-item"><strong>Professor:</strong> <span th:text="${curso.professor.nome}"></span></li>
+                <li class="list-group-item"><strong>Categoria:</strong> <span th:text="${curso.categoria.nome}"></span></li>
+                <li class="list-group-item"><strong>Data início:</strong> <span th:text="${curso.dataInicio}"></span></li>
+                <li class="list-group-item"><strong>Data final:</strong> <span th:text="${curso.dataFinal}"></span></li>
+            </ul>
+
+            <div class="mt-4">
+                <a th:href="@{/curso/listar/}" class="btn btn-secondary">Voltar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-light text-center py-3 mt-4">
+    &copy; 2025 Katherin Pereda - Todos os direitos reservados
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
